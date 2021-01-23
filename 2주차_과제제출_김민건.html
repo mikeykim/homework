@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+
+
+        <!-- 구글폰트 -->
+        <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+
+
+        <title>스파르타코딩클럽 | 나만의 쇼핑몰</title>
+
+
+        <style>
+            * {
+                font-family: 'Stylish', sans-serif;
+            }
+
+            .wrap {
+
+                width: 500px;
+                margin: auto;
+
+            }
+
+            .price {
+                font-size: 22px;
+            }
+
+            .nanro {
+                width: 520px;
+                margin: 20px auto;
+
+            }
+
+            .btn {
+                width: 100px;
+                margin: auto;
+                display: block;
+                background-color: saddlebrown;
+                border-radius: 10px;
+            }
+
+            .wonrate {
+                color: blue;
+
+            }
+
+        </style>
+
+
+        <script>
+            function orderok() {
+                let name = $('#user-name').val();
+                let count = $('#mount-count').val();
+                let address = $('#order-address').val();
+                let number = $('#ph-number').val();
+
+                if (name == "") {
+                    alert('어떤 소중한 분이 받는지 알고싶어요.')
+                } else if (count == "---수량을 선택하세요---") {
+                    alert('저희 제품이 몇개나 필요하세요?')
+                } else if (address == "") {
+                    alert('소중한 분에게 가는 길을 잃기 실어요.')
+                } else if (number == "") {
+                    alert('무사히 도착하게 전화받아주세요.')
+                } else {
+                    alert('유럽의 안방이 배달될 예정입니다');
+                }
+            }
+
+
+            $(document).ready(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "https://api.manana.kr/exchange/rate.json",
+                    data: {},
+                    success: function (response) {
+                        let rate = response[1]['rate'];
+                        $('#now-rate').text(rate);
+                    }
+
+                })
+            })
+
+
+        </script>
+
+
+    <body>
+
+        <div class="wrap">
+            <img class="nanro" src="https://cdn.ggumim.co.kr/cache/furniture/600/20201117105148rhC6wFVMbo.jpg"/>
+            <br>
+            <p>
+            <h2>가심비 벽난로 히터 <span class="price">가격:50,000원/개</span></h2>
+
+            <h5>이 상품은 집에 벽난로가 없어도 언제서나 유럽풍 벽난로 갬.성을 전해주는 벽난로 히터입니다.
+                우리집이 원룸이어도, 작은 차안에서도 언제나 유럽 갬.성을 느낄 수 있는 벽난로 히터.
+                여러분의 안방에도 유럽의 갬.성을 들여놔 보세요.</h5>
+            </p>
+            <p>
+            <h6 class="wonrate">달러-원 환율:<span id="now-rate">1,000</span></h6>
+            </p>
+
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">주문자 이름</span>
+                </div>
+                <input id="user-name" type="text" class="form-control">
+
+            </div>
+            <br>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">수량</label>
+                </div>
+                <select id="mount-count" class="custom-select">
+                    <option selected>---수량을 선택하세요---</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">주소</span>
+                </div>
+                <input id="order-address" type="text" class="form-control">
+
+
+            </div>
+            <br>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">전화 번호</span>
+                </div>
+                <input id="ph-number" type="text" class="form-control">
+
+            </div>
+            <br>
+            <button onclick="orderok()" type="button" class="btn btn-primary">주문하기</button>
+
+        </div>
+
+
+    </body>
