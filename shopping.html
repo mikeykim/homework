@@ -72,7 +72,16 @@
             $(document).ready(function () {
                 $("#order_list").html("");
                 showOrder();
-            });
+                $.ajax({
+                    type: "GET",
+                    url: "https://api.manana.kr/exchange/rate.json",
+                    data: {},
+                    success: function (response) {
+                        let rate = response[1]['rate'];
+                        $('#now-rate').text(rate);
+                    }
+                })
+            })
 
             //빈칸 완성
             function orderok() {
@@ -92,38 +101,26 @@
                 } else {
                     alert('유럽의 안방이 배달될 예정입니다');
                 }
+
+                //주문리스트 저장 요청하기
+                $.ajax({
+                    type: "POST",
+                    url: "/order",
+                    data: {
+                        'name_give': names,
+                        'count_give': count,
+                        'address_give': address,
+                        'number_give': number,
+                    },
+                    success: function (response) {
+                        if (response["result"] == "success") {
+                            alert(response["msg"]);
+                            window.location.reload();
+                        }
+                    }
+                })
             }
 
-            //환율
-            $(document).ready(function () {
-                $.ajax({
-                    type: "GET",
-                    url: "https://api.manana.kr/exchange/rate.json",
-                    data: {},
-                    success: function (response) {
-                        let rate = response[1]['rate'];
-                        $('#now-rate').text(rate);
-                    }
-
-                })
-            })
-            //주문리스트 저장 요청하기
-            $.ajax({
-                type: "POST",
-                url: "/order",
-                data: {
-                    'name_give': names,
-                    'count_give': count,
-                    'address_give': address,
-                    'number_give': number,
-                },
-                success: function (response) {
-                    if (response["result"] == "success") {
-                        alert(response["msg"]);
-                        window.location.reload();
-                    }
-                }
-            })
 
             function showOrder() {
                 // 1. 리뷰 목록을 서버에 요청하기
